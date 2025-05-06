@@ -28,3 +28,90 @@
   <script src="script.js"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI29 Chatbot</title>
+  <style>
+    body {
+      background-color: #1a1a6e;
+      color: #ffffff;
+      font-family: 'Poppins', sans-serif;
+      padding: 2rem;
+    }
+    .chatbox {
+      max-width: 600px;
+      margin: auto;
+    }
+    textarea {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      background-color: #ffffff;
+      color: #1a1a6e;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .response {
+      margin-top: 2rem;
+      background: #fff;
+      color: #000;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="chatbox">
+    <h1>🧠 Ask AI29</h1>
+    <textarea id="userInput" rows="4" placeholder="Ask anything..."></textarea>
+    <button onclick="askGPT()">Send</button>
+    <div class="response" id="responseBox"></div>
+  </div>
+
+  <script>
+    async function askGPT() {
+      const input = document.getElementById('userInput').value;
+      const responseBox = document.getElementById('responseBox');
+      
+      responseBox.innerHTML = "Thinking... 🤔";
+
+      const res = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer YOUR_API_KEY_HERE" // ← Paste your OpenAI key here
+        },
+        body: JSON.stringify({
+          model: "gpt-4",
+          messages: [
+            {
+              role: "system",
+              content: "You are an expert subject writer. Create a draft article for a branded blog using a provided set of keywords, specified tone, and hero products..."
+            },
+            {
+              role: "user",
+              content: input
+            }
+          ],
+          temperature: 1,
+          top_p: 1
+        })
+      });
+
+      const data = await res.json();
+      responseBox.innerHTML = data.choices?.[0]?.message?.content || "No reply.";
+    }
+  </script>
+</body>
+</html>
+
