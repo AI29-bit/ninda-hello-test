@@ -23,13 +23,11 @@ h1 {
   margin-top: 2rem;
 }
 
-.cta {
-  background-color: white;
-  color: #f60d0d;
-  padding: 0.75rem 1.5rem;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
+  .cta:hover {
+  transform: scale(1.1);
+  background: white;
+  color: #ff8008;
+  transition: 0.3s ease;
 }
 
 footer {
